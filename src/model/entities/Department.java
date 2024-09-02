@@ -5,31 +5,31 @@ import java.io.Serializable;
 public class Department implements Serializable {
 
     private Integer id;
-    private String name;
+    private String dep_name;
 
     public Department(){
 
     }
 
-    public Department(Integer id, String name) {
+    public Department(Integer id, String dep_name) {
         this.id = id;
-        this.name = name;
+        this.dep_name = dep_name;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getdep_Name() {
+        return dep_name;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setdep_Name(String dep_name) {
+        this.dep_name = dep_name;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class Department implements Serializable {
 
     @Override
     public String toString() {
-        return "Department [id=" + id + ", name=" + name + "]";
+        return "Department [id=" + id + ", name=" + dep_name + "]";
     }
 
 }
