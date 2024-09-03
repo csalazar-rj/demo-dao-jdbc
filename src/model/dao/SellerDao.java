@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.entities.Seller;
 
+// possui os métodos implementados pela classe SellerDaoJDBC
 public interface SellerDao {
 
     void insert(Seller obj);

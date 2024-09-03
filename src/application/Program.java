@@ -17,6 +17,7 @@ public class Program {
         // Seller seller = new Seller(21, "Carlos", "csalazar@gmail.com", new Date(), 3000.00, obj);
 
         SellerDao sellerDao = DaoFactory.createSellerDao();
+        System.out.println("<<< findByID Validation >>>");
         Seller seller = sellerDao.findById(1);
 
         System.out.println(seller);
