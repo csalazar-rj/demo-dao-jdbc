@@ -18,18 +18,26 @@ public class Program {
         // Seller seller = new Seller(21, "Carlos", "csalazar@gmail.com", new Date(), 3000.00, obj);
 
         SellerDao sellerDao = DaoFactory.createSellerDao();
-        System.out.println("<<< findByID Validation >>>");
+        System.out.println("<<< findByID() Validation >>>");
         Seller seller = sellerDao.findById(1);
 
         System.out.println(seller);
 
-        System.out.println("\n<<< findByDepartment Validation >>>");
+        System.out.println("\n<<< findByDepartment() Validation >>>");
         Department department = new Department(2, null);
         List<Seller> list = sellerDao.findByDepartment(department);
         
         for (Seller obj : list){
             System.out.println(obj);
         }
+
+        System.out.println("\n<<< findAll() Validation >>>");
+        //List<Seller> listAll = sellerDao.findAll();
+        list = sellerDao.findAll();
         
+        for (Seller obj : list){
+            System.out.println(obj);
+        }
+
     }
 }
