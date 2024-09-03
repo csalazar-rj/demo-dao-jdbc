@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.DB;
 import db.DbException;
@@ -46,7 +49,7 @@ public class SellerDaoJDBC implements SellerDao{
         ResultSet rs = null;
         try {
             st = conn.prepareStatement(
-                " SELECT SELLER.*, DEPT.DEP_NAME"  
+                " SELECT SELLER.*, DEPT.NAME AS DEP_NAME"  
                 + " FROM SELLER, DEPARTMENT DEPT" 
                 + " WHERE SELLER.DEPTID = DEPT.ID"
                 + "   AND SELLER.ID = ?");
@@ -88,7 +91,7 @@ public class SellerDaoJDBC implements SellerDao{
     private Department instantiateDepartment(ResultSet rs) throws SQLException {
         Department dep = new Department();
         dep.setId(rs.getInt("deptid"));
-        dep.setdep_Name(rs.getString("dep_name"));
+        dep.setName(rs.getString("dep_name"));
         return dep;
     }
 
@@ -98,4 +101,49 @@ public class SellerDaoJDBC implements SellerDao{
         throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
 
+    @Override
+    public List<Seller> findByDepartment(Department department) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                " SELECT SELLER.*, DEPT.NAME AS DEP_NAME"  
+                + " FROM SELLER, DEPARTMENT DEPT" 
+                + " WHERE SELLER.DEPTID = DEPT.ID"
+                + "   AND DEPT.ID = ?");
+
+            st.setInt(1, department.getId());
+            rs = st.executeQuery();
+
+            List<Seller> list = new ArrayList<>();
+            // cria um map vazio para incluir qualquer entrada do resultSet
+            Map<Integer, Department> map = new HashMap<>();
+
+            // veriifca se houve retorno do banco
+            while (rs.next()) {
+                // carrega no map o deptid retornado para evitar a duplicidade de retorno da mesma chave
+                // quanto estiver realizando o relacionamento das tabelas
+                Department dep = map.get(rs.getInt("deptid"));
+
+                if (dep == null) {
+                    dep = instantiateDepartment(rs);
+                    map.put(rs.getInt("deptid"), dep);
+                }
+
+                Seller obj = instantiateSeller(rs, dep);
+                list.add(obj);                
+            }
+            return list;
+        }
+
+        catch (SQLException e){
+            throw new DbException(e.getMessage());            
+        }
+
+        finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
     }
+
+}
