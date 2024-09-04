@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import model.dao.DaoFactory;
 import model.dao.SellerDao;
@@ -17,6 +18,7 @@ public class Program {
         System.out.print("\033[H\033[2J");  
         System.out.flush();
         
+        Scanner scan = new Scanner(System.in);
         DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 
         // Department obj = new Department(1, "Books");
@@ -55,9 +57,16 @@ public class Program {
         
         System.out.println("\n<<< Seller UPDATE Validation >>>");
         seller = sellerDao.findById(5);
-        seller.setBase_salary(7500.00);
+        seller.setBase_salary(7300.00);
         sellerDao.update(seller);
         System.out.println("Update Completed!");
+
+        System.out.println("\n<<< Seller DELETE Validation >>>");
+        System.out.print("Enter the ID to delete: ");
+        int idDel = scan.nextInt();
+        sellerDao.deleteById(idDel);
+        System.out.println("Delete completed.");
+        scan.close();
 
     }
 }
