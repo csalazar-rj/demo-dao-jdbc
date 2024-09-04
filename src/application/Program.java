@@ -44,13 +44,20 @@ public class Program {
             System.out.println(obj);
         }
 
-        System.out.println("\n<<< Seller Insert Validation >>>");
+        System.out.println("\n<<< Seller INSERT Validation >>>");
         Date d1 = df.parse("09-19-1973");
         //Seller newSeller = new Seller("Jean Hinton", "jhinton@wexinc.om", new Date(), 6500.00, department);
         Seller newSeller = new Seller("Jean Hinton", "jhinton@wexinc.om", d1, 6500.00, department);
 
         sellerDao.insert(newSeller);
         System.out.println("Inserted New Id: " + newSeller.getId());
+
+        
+        System.out.println("\n<<< Seller UPDATE Validation >>>");
+        seller = sellerDao.findById(5);
+        seller.setBase_salary(7500.00);
+        sellerDao.update(seller);
+        System.out.println("Update Completed!");
 
     }
 }

@@ -68,9 +68,28 @@ public class SellerDaoJDBC implements SellerDao{
 
     @Override
     public void update(Seller obj) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        PreparedStatement st = null;
+        
+        try {
+            st = conn.prepareStatement(
+                " UPDATE SELLER "
+                + " SET BASE_SALARY = ?"
+                + " WHERE ID = ? ");
+    
+                st.setDouble(1, obj.getBase_salary());
+                st.setInt(2, obj.getId());
+                
+                st.executeUpdate();
+        }
+        catch (SQLException e){
+            throw new DbException(e.getMessage());
+        }
+
+        finally {
+            DB.closeStatement(st);
+        }
     }
+
 
     @Override
     public void deleteById(Integer id) {
