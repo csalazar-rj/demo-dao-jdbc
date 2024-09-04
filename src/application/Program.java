@@ -1,5 +1,8 @@
 package application;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -10,10 +13,12 @@ import model.entities.Seller;
 
 public class Program {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         System.out.print("\033[H\033[2J");  
         System.out.flush();
         
+        DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+
         // Department obj = new Department(1, "Books");
         // Seller seller = new Seller(21, "Carlos", "csalazar@gmail.com", new Date(), 3000.00, obj);
 
@@ -24,7 +29,7 @@ public class Program {
         System.out.println(seller);
 
         System.out.println("\n<<< findByDepartment() Validation >>>");
-        Department department = new Department(2, null);
+        Department department = new Department(1, null);
         List<Seller> list = sellerDao.findByDepartment(department);
         
         for (Seller obj : list){
@@ -38,6 +43,14 @@ public class Program {
         for (Seller obj : list){
             System.out.println(obj);
         }
+
+        System.out.println("\n<<< Seller Insert Validation >>>");
+        Date d1 = df.parse("09-19-1973");
+        //Seller newSeller = new Seller("Jean Hinton", "jhinton@wexinc.om", new Date(), 6500.00, department);
+        Seller newSeller = new Seller("Jean Hinton", "jhinton@wexinc.om", d1, 6500.00, department);
+
+        sellerDao.insert(newSeller);
+        System.out.println("Inserted New Id: " + newSeller.getId());
 
     }
 }
