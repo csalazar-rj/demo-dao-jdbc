@@ -74,8 +74,13 @@ public class Program {
         // Testing the DepartmentDao
         // ----------------------------
         
-        Department obj = new Department(1, "Books");
+        //Department obj = new Department(1, "Books");
+
+        System.out.println("<<< Department findByID() - Validation >>>");
         DepartmentDao deptDao = DaoFactory.createDepartmentDao();
+        Department dept = deptDao.findById(2);
+        System.out.println(dept);
+
 
     }
 }
