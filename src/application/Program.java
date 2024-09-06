@@ -81,6 +81,24 @@ public class Program {
         Department dept = deptDao.findById(2);
         System.out.println(dept);
 
+        System.out.println("\n<<< Department findAll() - Validation >>>");
+        List<Department> list = deptDao.findAll();
+        for ( Department obj : list) {
+            System.out.println(obj);
+        }
+
+        System.out.println("\n<<< Department Insert() - Validation >>>");
+        Department newDepartment = new Department(null, "BI");
+        deptDao.insert(newDepartment);                
+        System.out.println("Inserted New Id: " + newDepartment.getId());
+
+
+        System.out.println("\n<<< Department UPDATE Validation >>>");
+        dept = deptDao.findById(1);
+        dept.setName("AC. Payables");
+        deptDao.update(dept);        
+        System.out.println("Update Completed!");
+
 
     }
 }
