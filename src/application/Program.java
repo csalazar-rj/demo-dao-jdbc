@@ -99,6 +99,18 @@ public class Program {
         deptDao.update(dept);        
         System.out.println("Update Completed!");
 
+        
+        System.out.println("\n<<< Department DELETE Validation >>>");
+        
+        // maneira rapida sem entrada de dados
+        // deptDao.deleteById(5);
+
+        System.out.print("Enter the ID to delete: ");
+        int idDel = scan.nextInt();
+        deptDao.deleteById(idDel);
+        scan.close();
+
+        System.out.println("Delete Completed!");
 
     }
 }
